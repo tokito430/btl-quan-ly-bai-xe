@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Trông Giữ Xe - Trang Chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">🅿️ Quản Lý Bãi Xe</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Danh sách xe</a></li>
+                    <li class="nav-item"><a class="nav-link" href="xe-vao.html">Nhận xe vào</a></li>
+                    <li class="nav-item"><a class="nav-link" href="thong-ke.html">Thống kê</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Danh Sách Xe Đang Trong Bãi</h2>
+
+        <!-- Các thẻ hiển thị số lượng tự động cập nhật qua JS -->
+        <div class="row text-white mb-4">
+            <div class="col-md-4">
+                <div class="card bg-primary p-3">
+                    <h5>Tổng số xe trong bãi</h5>
+                    <h3 id="count-total">0 chiếc</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success p-3">
+                    <h5>Xe máy</h5>
+                    <h3 id="count-motor">0 chiếc</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-warning p-3">
+                    <h5>Ô tô</h5>
+                    <h3 id="count-car">0 chiếc</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>STT</th>
+                            <th>Biển số xe</th>
+                            <th>Loại xe</th>
+                            <th>Thời gian vào</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-xe-trong-bai">
+                        <!-- JS tự độngRender dữ liệu ở đây -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- File xử lý CSDL và thời gian thực -->
+    <script src="script.js"></script>
+</body>
+</html>
