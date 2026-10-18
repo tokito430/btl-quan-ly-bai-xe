@@ -1,4 +1,3 @@
-// Khởi tạo dữ liệu mặc định ban đầu nếu localStorage rỗng
 function initData() {
     if (!localStorage.getItem('dsXeTrongBai')) {
         const defaultXe = [
@@ -16,7 +15,7 @@ function initData() {
 document.addEventListener('DOMContentLoaded', () => {
     initData();
 
-    // 1. XỬ LÝ TRANG INDEX.HTML (Danh sách xe & Số lượng thời gian thực)
+
     if (document.getElementById('table-xe-trong-bai')) {
         renderIndexPage();
     }
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let dsXe = JSON.parse(localStorage.getItem('dsXeTrongBai')) || [];
 
-            // Kiểm tra xe trùng trong bãi
+
             if (dsXe.some(x => x.bienSo === bienSo)) {
                 alert('LỖI: Biển số xe này hiện đã có trong bãi!');
                 return;
@@ -49,17 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. XỬ LÝ TRANG THONG-KE.HTML
+
     if (document.getElementById('table-history')) {
         renderThongKePage();
     }
 });
 
-// Hàm cập nhật danh sách xe và đếm số lượng thời gian thực tại index.html
+
 function renderIndexPage() {
     let dsXe = JSON.parse(localStorage.getItem('dsXeTrongBai')) || [];
 
-    // Cập nhật các thẻ đếm thời gian thực
+
     document.getElementById('count-total').innerText = `${dsXe.length} chiếc`;
     document.getElementById('count-motor').innerText = `${dsXe.filter(x => x.loaiXe === 'Xe máy').length} chiếc`;
     document.getElementById('count-car').innerText = `${dsXe.filter(x => x.loaiXe === 'Ô tô').length} chiếc`;
@@ -83,7 +82,7 @@ function renderIndexPage() {
     `).join('');
 }
 
-// Cho xe ra -> Cập nhật lại số xe thời gian thực & ghi nhận lịch sử doanh thu
+
 function choXeRa(id) {
     let dsXe = JSON.parse(localStorage.getItem('dsXeTrongBai')) || [];
     let lichSu = JSON.parse(localStorage.getItem('lichSuXe')) || [];
@@ -100,11 +99,11 @@ function choXeRa(id) {
     const timeOut = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} - ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 
     if (confirm(`Xác nhận cho xe ${xeRa.bienSo} ra bãi?\nSố tiền thu: ${giaTien.toLocaleString('vi-VN')} VNĐ`)) {
-        // Xóa khỏi bãi
+
         dsXe = dsXe.filter(x => x.id !== id);
         localStorage.setItem('dsXeTrongBai', JSON.stringify(dsXe));
 
-        // Lưu vào lịch sử
+
         lichSu.push({
             id: Date.now(),
             bienSo: xeRa.bienSo,
@@ -115,12 +114,12 @@ function choXeRa(id) {
         });
         localStorage.setItem('lichSuXe', JSON.stringify(lichSu));
 
-        // Cập nhật lại giao diện trang index ngay lập tức
+
         renderIndexPage();
     }
 }
 
-// Render dữ liệu thống kê
+
 function renderThongKePage() {
     let lichSu = JSON.parse(localStorage.getItem('lichSuXe')) || [];
     let dsXe = JSON.parse(localStorage.getItem('dsXeTrongBai')) || [];
