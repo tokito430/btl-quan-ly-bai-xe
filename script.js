@@ -87,7 +87,6 @@ function choXeRa(id) {
     const timeOut = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} - ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 
     if (confirm(`Xác nhận cho xe ${xeRa.bienSo} ra bãi?\nSố tiền thu: ${giaTien.toLocaleString('vi-VN')} VNĐ`)) {
-        // Xóa khỏi bãi
         dsXe = dsXe.filter(x => x.id !== id);
         localStorage.setItem('dsXeTrongBai', JSON.stringify(dsXe));
 
