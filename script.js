@@ -1,10 +1,6 @@
 function initData() {
     if (!localStorage.getItem('dsXeTrongBai')) {
-        const defaultXe = [
-            { id: 1, bienSo: '29A-123.45', loaiXe: 'Xe máy', timeIn: '18/10/2026 - 08:30' },
-            { id: 2, bienSo: '30F-987.65', loaiXe: 'Ô tô', timeIn: '18/10/2026 - 09:15' }
-        ];
-        localStorage.setItem('dsXeTrongBai', JSON.stringify(defaultXe));
+        localStorage.setItem('dsXeTrongBai', JSON.stringify([]));
     }
 
     if (!localStorage.getItem('lichSuXe')) {
@@ -15,12 +11,10 @@ function initData() {
 document.addEventListener('DOMContentLoaded', () => {
     initData();
 
-
     if (document.getElementById('table-xe-trong-bai')) {
         renderIndexPage();
     }
 
-    // 2. XỬ LÝ TRANG XE-VAO.HTML (Form nhận xe)
     const formNhanXe = document.getElementById('form-nhan-xe');
     if (formNhanXe) {
         formNhanXe.addEventListener('submit', (e) => {
@@ -29,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const loaiXe = document.getElementById('select-loai-xe').value;
 
             let dsXe = JSON.parse(localStorage.getItem('dsXeTrongBai')) || [];
-
 
             if (dsXe.some(x => x.bienSo === bienSo)) {
                 alert('LỖI: Biển số xe này hiện đã có trong bãi!');
@@ -48,16 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     if (document.getElementById('table-history')) {
         renderThongKePage();
     }
 });
 
-
 function renderIndexPage() {
     let dsXe = JSON.parse(localStorage.getItem('dsXeTrongBai')) || [];
-
 
     document.getElementById('count-total').innerText = `${dsXe.length} chiếc`;
     document.getElementById('count-motor').innerText = `${dsXe.filter(x => x.loaiXe === 'Xe máy').length} chiếc`;
@@ -82,7 +72,6 @@ function renderIndexPage() {
     `).join('');
 }
 
-
 function choXeRa(id) {
     let dsXe = JSON.parse(localStorage.getItem('dsXeTrongBai')) || [];
     let lichSu = JSON.parse(localStorage.getItem('lichSuXe')) || [];
@@ -90,7 +79,6 @@ function choXeRa(id) {
     const xeRa = dsXe.find(x => x.id === id);
     if (!xeRa) return;
 
-    // Tính tiền theo loại xe
     let giaTien = 5000;
     if (xeRa.loaiXe === 'Ô tô') giaTien = 30000;
     if (xeRa.loaiXe === 'Xe đạp') giaTien = 3000;
@@ -99,10 +87,9 @@ function choXeRa(id) {
     const timeOut = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} - ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 
     if (confirm(`Xác nhận cho xe ${xeRa.bienSo} ra bãi?\nSố tiền thu: ${giaTien.toLocaleString('vi-VN')} VNĐ`)) {
-
+        // Xóa khỏi bãi
         dsXe = dsXe.filter(x => x.id !== id);
         localStorage.setItem('dsXeTrongBai', JSON.stringify(dsXe));
-
 
         lichSu.push({
             id: Date.now(),
@@ -114,11 +101,9 @@ function choXeRa(id) {
         });
         localStorage.setItem('lichSuXe', JSON.stringify(lichSu));
 
-
         renderIndexPage();
     }
 }
-
 
 function renderThongKePage() {
     let lichSu = JSON.parse(localStorage.getItem('lichSuXe')) || [];
